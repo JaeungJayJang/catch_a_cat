@@ -1,0 +1,13 @@
+name: stack_RPG
+description: First flutter game using Flame engine. that is inspired by popular 2048 and stacklands games.
+version: 0.0.0
+publish_to: none
+
+environment:
+  sdk: ^3.0.0
+  flutter: ^3.13.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flame: ^1.10.0
