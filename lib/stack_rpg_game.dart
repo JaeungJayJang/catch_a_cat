@@ -1,6 +1,6 @@
 import 'package:flame/components.dart';
 import "package:flame/game.dart";
-import 'land.dart';
+import 'components/land.dart';
 
 class StackRPGGame extends FlameGame {
   static const double landWidth = 1000.0;
