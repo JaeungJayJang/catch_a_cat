@@ -1,16 +1,8 @@
-# game_1
+# Cat Burglar Chronicles
 
-A new Flutter project.
+Potential name suggested by Chat.gpt XD
 
-## Getting Started
+This might be a better name and cat could be a source that can attract people.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+potential idea for monetization or attraction -:
+  1. different cat costumes / cat species
