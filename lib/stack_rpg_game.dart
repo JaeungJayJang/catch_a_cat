@@ -10,8 +10,14 @@ import 'package:collection/collection.dart';
 
 enum Gesture { up, down, left, right }
 
+// This contains the logic to set up the whole game,
+// including the main UI, map, button, etc.
+// it inludes the main game loop and logic.
+
 class StackRPGGame extends FlameGame
     with MultiTouchDragDetector, HasCollisionDetection {
+  static int gameLevel = 1;
+
   // variables that define the world and lands on the world.
   // land is where cards are placed
   static const int landCountX = 6;
@@ -69,21 +75,30 @@ class StackRPGGame extends FlameGame
     // ------------------------------------------
     guards = List<Guard>.filled(numGuards, Guard());
     for (int i = 0; i < numGuards; i++) {
-      List goardPosition = map.getRandomPosition();
-      guards[i] = Guard(
-        positionX: goardPosition[0],
-        positionY: goardPosition[1],
-      );
-
-      map.addCard(guards[i]);
+      try {
+        List goardPosition = map.getRandomPosition();
+        guards[i] = Guard(
+          positionX: goardPosition[0],
+          positionY: goardPosition[1],
+        );
+        map.addCard(guards[i]);
+      } catch (e) {
+        print(">> ${i}");
+        print("available: ${map.getAvailableLands().toString()}");
+        print(e);
+      }
     }
 
-    List goalPosition = map.getRandomPosition();
-    goal = Goal(
-      positionX: goalPosition[0],
-      positionY: goalPosition[1],
-    );
-    map.addCard(goal);
+    try {
+      List goalPosition = map.getRandomPosition();
+      goal = Goal(
+        positionX: goalPosition[0],
+        positionY: goalPosition[1],
+      );
+      map.addCard(goal);
+    } catch (e) {
+      print(e);
+    }
 
     // ------------------------------------------
     // set the camera to fix to lands.
@@ -110,7 +125,6 @@ class StackRPGGame extends FlameGame
     // continuous event
     for (int i = 0; i < numGuards; i++) {
       List guardFront = guards[i].getFrontPosition();
-
       if (ListEquality()
               .equals(guards[i].getPosition(), mainCharacter.getPosition()) ||
           ListEquality().equals(guardFront, mainCharacter.getPosition())) {
