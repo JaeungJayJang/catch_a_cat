@@ -3,10 +3,6 @@ import 'package:flame/events.dart';
 import "package:flame/game.dart";
 import 'package:flame/input.dart';
 import 'package:stack_RPG/components/world/map.dart';
-import 'package:stack_RPG/components/character/mainCharacter.dart';
-import 'package:stack_RPG/components/character/guard.dart';
-import 'package:stack_RPG/components/goal/goal.dart';
-import 'package:collection/collection.dart';
 
 enum Gesture { up, down, left, right }
 
@@ -38,11 +34,6 @@ class StackRPGGame extends FlameGame
   static Gesture? gesture;
 
   static late Map map;
-  static late MainCharacter mainCharacter;
-  int numGuards = 3;
-  static late List<Guard> guards;
-
-  static late Goal goal;
 
   // refresh
   double interval = 1.0;
@@ -60,45 +51,6 @@ class StackRPGGame extends FlameGame
       landGap: landGap,
     );
     world.add(map);
-
-    // ------------------------------------------
-    // create character.
-    // ------------------------------------------
-    mainCharacter = MainCharacter(
-      positionX: (landCountX ~/ 2), // center of the world
-      positionY: (landCountY ~/ 2), // center of the world
-    );
-    map.addCard(mainCharacter);
-
-    // ------------------------------------------
-    // create guard.
-    // ------------------------------------------
-    guards = List<Guard>.filled(numGuards, Guard());
-    for (int i = 0; i < numGuards; i++) {
-      try {
-        List goardPosition = map.getRandomPosition();
-        guards[i] = Guard(
-          positionX: goardPosition[0],
-          positionY: goardPosition[1],
-        );
-        map.addCard(guards[i]);
-      } catch (e) {
-        print(">> ${i}");
-        print("available: ${map.getAvailableLands().toString()}");
-        print(e);
-      }
-    }
-
-    try {
-      List goalPosition = map.getRandomPosition();
-      goal = Goal(
-        positionX: goalPosition[0],
-        positionY: goalPosition[1],
-      );
-      map.addCard(goal);
-    } catch (e) {
-      print(e);
-    }
 
     // ------------------------------------------
     // set the camera to fix to lands.
@@ -122,30 +74,30 @@ class StackRPGGame extends FlameGame
 
     timePassed += dt;
 
-    // continuous event
-    for (int i = 0; i < numGuards; i++) {
-      List guardFront = guards[i].getFrontPosition();
-      if (ListEquality()
-              .equals(guards[i].getPosition(), mainCharacter.getPosition()) ||
-          ListEquality().equals(guardFront, mainCharacter.getPosition())) {
-        print("main Character found!");
-      }
-    }
+    // // continuous event
+    // for (int i = 0; i < numGuards; i++) {
+    //   List guardFront = guards[i].getFrontPosition();
+    //   if (ListEquality()
+    //           .equals(guards[i].getPosition(), mainCharacter.getPosition()) ||
+    //       ListEquality().equals(guardFront, mainCharacter.getPosition())) {
+    //     print("main Character found!");
+    //   }
+    // }
 
-    // timed event
-    if (timePassed >= interval) {
-      timePassed = 0.0;
+    // // timed event
+    // if (timePassed >= interval) {
+    //   timePassed = 0.0;
 
-      for (int i = 0; i < numGuards; i++) {
-        List guardFront = guards[i].getFrontPosition();
+    //   for (int i = 0; i < numGuards; i++) {
+    //     List guardFront = guards[i].getFrontPosition();
 
-        if (map.isSafe(guardFront[0], guardFront[1])) {
-          guards[i].moveForwardBy1();
-        } else {
-          guards[i].turnBack();
-        }
-      }
-    }
+    //     if (map.isSafe(guardFront[0], guardFront[1])) {
+    //       guards[i].moveForwardBy1();
+    //     } else {
+    //       guards[i].turnBack();
+    //     }
+    //   }
+    // }
     // if (guard.direction == Direction.up && guard.positionY == 0) {
     //   guard.facingBack();
     // } else if (guard.direction == Direction.down &&
@@ -175,21 +127,21 @@ class StackRPGGame extends FlameGame
     double dx = _endPosition[0] - _startPosition[0];
     double dy = _endPosition[1] - _startPosition[1];
 
-    int x = mainCharacter.positionX;
-    int y = mainCharacter.positionY;
+    int x = map.mainCharacter.positionX;
+    int y = map.mainCharacter.positionY;
 
     if (dx.abs() > dy.abs()) {
       if (dx > 0) {
         gesture = Gesture.right;
         // print("right");
         if (map.isSafe(x + 1, y)) {
-          mainCharacter.moveRightBy1();
+          map.mainCharacter.moveRightBy1();
         }
       } else {
         gesture = Gesture.left;
         // print("left");
         if (map.isSafe(x - 1, y)) {
-          mainCharacter.moveLeftBy1();
+          map.mainCharacter.moveLeftBy1();
         }
       }
     } else {
@@ -197,13 +149,13 @@ class StackRPGGame extends FlameGame
         gesture = Gesture.down;
         // print("down");
         if (map.isSafe(x, y + 1)) {
-          mainCharacter.moveDownBy1();
+          map.mainCharacter.moveDownBy1();
         }
       } else {
         gesture = Gesture.up;
         // print("up");
         if (map.isSafe(x, y - 1)) {
-          mainCharacter.moveUpBy1();
+          map.mainCharacter.moveUpBy1();
         }
       }
     }

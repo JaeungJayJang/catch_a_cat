@@ -1,9 +1,12 @@
 import 'dart:ui';
 import 'dart:math';
+import 'package:collection/collection.dart';
 
 import 'package:flame/components.dart';
 import 'package:stack_RPG/components/card.dart';
+import 'package:stack_RPG/components/character/guard.dart';
 import 'package:stack_RPG/components/character/mainCharacter.dart';
+import 'package:stack_RPG/components/goal/goal.dart';
 import 'package:stack_RPG/components/world/land.dart';
 
 class Map extends PositionComponent {
@@ -126,11 +129,101 @@ class Map extends PositionComponent {
     remove(card);
   }
 
+  late MainCharacter mainCharacter;
+
   @override
   Future<void> onLoad() async {
     for (int i = 0; i < landCountX; i++) {
       for (int j = 0; j < landCountY; j++) {
         add(lands[i][j]!);
+      }
+    }
+
+    // ------------------------------------------
+    // create character.
+    // ------------------------------------------
+    mainCharacter = MainCharacter(
+      positionX: (landCountX ~/ 2), // center of the world
+      positionY: (landCountY ~/ 2), // center of the world
+    );
+    addCard(mainCharacter);
+  }
+
+  int numGuards = 3;
+  static late List<Guard> guards;
+  static late Goal goal;
+
+  // refresh
+  double interval = 1.0;
+
+  @override
+  void onMount() {
+    super.onMount();
+
+    // ------------------------------------------
+    // create guard.
+    // ------------------------------------------
+    guards = List<Guard>.filled(numGuards, Guard());
+    for (int i = 0; i < numGuards; i++) {
+      try {
+        List goardPosition = getRandomPosition();
+        guards[i] = Guard(
+          positionX: goardPosition[0],
+          positionY: goardPosition[1],
+        );
+        addCard(guards[i]);
+      } catch (e) {
+        print(">> ${i}");
+        print("available: ${getAvailableLands().toString()}");
+        print(e);
+      }
+    }
+
+    // ------------------------------------------
+    // create goal.
+    // ------------------------------------------
+    try {
+      List goalPosition = getRandomPosition();
+      goal = Goal(
+        positionX: goalPosition[0],
+        positionY: goalPosition[1],
+      );
+      addCard(goal);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  double timePassed = 0.0;
+
+  @override
+  void update(double dt) {
+    super.update(dt);
+
+    timePassed += dt;
+
+    // continuous event
+    for (int i = 0; i < numGuards; i++) {
+      List guardFront = guards[i].getFrontPosition();
+      if (ListEquality()
+              .equals(guards[i].getPosition(), mainCharacter.getPosition()) ||
+          ListEquality().equals(guardFront, mainCharacter.getPosition())) {
+        print("main Character found!");
+      }
+    }
+
+    // timed event
+    if (timePassed >= interval) {
+      timePassed = 0.0;
+
+      for (int i = 0; i < numGuards; i++) {
+        List guardFront = guards[i].getFrontPosition();
+
+        if (isSafe(guardFront[0], guardFront[1])) {
+          guards[i].moveForwardBy1();
+        } else {
+          guards[i].turnBack();
+        }
       }
     }
   }
