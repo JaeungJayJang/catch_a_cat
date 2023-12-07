@@ -80,4 +80,20 @@ abstract class Card extends PositionComponent with CollisionCallbacks {
   Map getMap() {
     return map!;
   }
+
+  List<List<int>> getSurroundingPositions() {
+    List<int> xRange = [positionX - 1, positionX, positionX + 1];
+    List<int> yRange = [positionY - 1, positionY, positionY + 1];
+    List<List<int>> positions = [];
+    for (int x in xRange) {
+      if (x >= 0 && x <= map!.landCountX - 1) {
+        for (int y in yRange) {
+          if (y >= 0 && y <= map!.landCountY - 1) {
+            positions.add([x, y]);
+          }
+        }
+      }
+    }
+    return positions;
+  }
 }
