@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flame/components.dart';
 import 'package:stack_RPG/components/card.dart';
+import 'package:stack_RPG/components/character/mainCharacter.dart';
 import 'package:stack_RPG/components/world/land.dart';
 
 class Map extends PositionComponent {
@@ -48,6 +49,7 @@ class Map extends PositionComponent {
         ));
 
   bool isSafe(int x, int y) {
+    // Check if the position is in the map
     if (x >= 0 && x <= landCountX - 1) {
       if (y >= 0 && y <= landCountY - 1) {
         return true;
@@ -57,6 +59,7 @@ class Map extends PositionComponent {
   }
 
   Land getLand(int x, int y) {
+    // return land aht position (x, y)
     try {
       return lands[x][y]!;
     } catch (e) {
@@ -65,20 +68,36 @@ class Map extends PositionComponent {
   }
 
   List<List<int>> getAvailableLands() {
-    List<List<int>> entireLands = [];
+    // create NxN matrix for the lands
+    List<List<int>> lands =
+        List.generate(landCountX, (i) => List.filled(landCountY, 0));
+
+    // mark location where object exist
+    objects.forEach((object) => lands[object.positionX][object.positionY] = -1);
+
+    // exceptions:
+    List<List<int>> exceptions = [];
+    for (int i = 0; i < objects.length; i++) {
+      // remove surrounding of main character
+      if (objects[i] is MainCharacter) {
+        exceptions.addAll(objects[i].getSurroundingPositions());
+      }
+    }
+    print(exceptions);
+
+    // mark location where exceptions exist
+    exceptions.forEach((exception) => lands[exception[0]][exception[1]] = -1);
+
+    List<List<int>> availableLands = [];
     for (int i = 0; i < landCountX; i++) {
       for (int j = 0; j < landCountY; j++) {
-        entireLands.add([i, j]);
+        if (lands[i][j] == 0) {
+          availableLands.add([i, j]);
+        }
       }
     }
 
-    List<List<int>> objectPosition =
-        objects.map((e) => e.getPosition()).toList();
-
-    List<List<int>> availableLand = entireLands
-        .where((element) => !objectPosition.contains(element))
-        .toList();
-    return availableLand;
+    return availableLands;
   }
 
   List<int> getRandomPosition() {
@@ -87,25 +106,18 @@ class Map extends PositionComponent {
     List<List<int>> availableLands = getAvailableLands();
 
     if (availableLands.length == 0) {
-      return [-1, -1];
+      throw Exception("No available land");
     } else {
       int randomPos = random.nextInt(availableLands.length);
       return availableLands[randomPos];
     }
   }
 
-  // @override
-  // void render(Canvas canvas) {
-  //   for (int i = 0; i < landCountX; i++) {
-  //     for (int j = 0; j < landCountY; j++) {}
-  //   }
-
-  //   super.render(canvas);
-  // }
-
   void addCard(Card card) {
+    // set card specific config
     card.setMap(this);
-    objects.add(card);
+    // set map specific config
+    objects.add(card); //keep track of all objects
     add(card);
   }
 
