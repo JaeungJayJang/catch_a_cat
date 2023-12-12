@@ -4,12 +4,13 @@ import 'package:collection/collection.dart';
 
 import 'package:flame/components.dart';
 import 'package:stack_RPG/components/card.dart';
+import 'package:stack_RPG/components/character/character.dart';
 import 'package:stack_RPG/components/character/guard.dart';
 import 'package:stack_RPG/components/character/mainCharacter.dart';
 import 'package:stack_RPG/components/goal/goal.dart';
 import 'package:stack_RPG/components/world/land.dart';
 
-class Map extends PositionComponent {
+class Map extends PositionComponent with HasCollisionDetection {
   // World characteristic
   double width;
   double height;
@@ -86,7 +87,6 @@ class Map extends PositionComponent {
         exceptions.addAll(objects[i].getSurroundingPositions());
       }
     }
-    print(exceptions);
 
     // mark location where exceptions exist
     exceptions.forEach((exception) => lands[exception[0]][exception[1]] = -1);
@@ -164,6 +164,21 @@ class Map extends PositionComponent {
     // create guard.
     // ------------------------------------------
     guards = List<Guard>.filled(numGuards, Guard());
+    // guards[0] = Guard(
+    //     // positionX: goardPosition[0],
+    //     // positionY: goardPosition[1],
+    //     positionX: 2,
+    //     positionY: 2,
+    //     direction: Direction.right);
+    // addCard(guards[0]);
+    // guards[1] = Guard(
+    //     // positionX: goardPosition[0],
+    //     // positionY: goardPosition[1],
+    //     positionX: 2,
+    //     positionY: 2,
+    //     direction: Direction.down);
+    // addCard(guards[1]);
+
     for (int i = 0; i < numGuards; i++) {
       try {
         List goardPosition = getRandomPosition();
@@ -171,6 +186,8 @@ class Map extends PositionComponent {
           positionX: goardPosition[0],
           positionY: goardPosition[1],
         );
+        // positionX: 2,
+        // positionY: 2);
         addCard(guards[i]);
       } catch (e) {
         print(">> ${i}");
@@ -202,30 +219,30 @@ class Map extends PositionComponent {
 
     timePassed += dt;
 
-    // continuous event
-    for (int i = 0; i < numGuards; i++) {
-      List guardFront = guards[i].getFrontPosition();
-      if (ListEquality()
-              .equals(guards[i].getPosition(), mainCharacter.getPosition()) ||
-          ListEquality().equals(guardFront, mainCharacter.getPosition())) {
-        print("main Character found!");
-      }
-    }
+    // // continuous event
+    // for (int i = 0; i < numGuards; i++) {
+    //   List guardFront = guards[i].getFrontPosition();
+    //   if (ListEquality()
+    //           .equals(guards[i].getPosition(), mainCharacter.getPosition()) ||
+    //       ListEquality().equals(guardFront, mainCharacter.getPosition())) {
+    //     print("main Character found!");
+    //   }
+    // }
 
-    // timed event
-    if (timePassed >= interval) {
-      timePassed = 0.0;
+    // // timed event
+    // if (timePassed >= interval) {
+    //   timePassed = 0.0;
 
-      for (int i = 0; i < numGuards; i++) {
-        List guardFront = guards[i].getFrontPosition();
+    //   for (int i = 0; i < numGuards; i++) {
+    //     List guardFront = guards[i].getFrontPosition();
 
-        if (isSafe(guardFront[0], guardFront[1])) {
-          guards[i].moveForwardBy1();
-        } else {
-          guards[i].turnBack();
-        }
-      }
-    }
+    //     if (isSafe(guardFront[0], guardFront[1])) {
+    //       guards[i].moveForwardBy1();
+    //     } else {
+    //       guards[i].turnBack();
+    //     }
+    //   }
+    // }
   }
 
   // @override
