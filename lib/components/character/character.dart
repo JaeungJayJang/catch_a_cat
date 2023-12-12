@@ -46,7 +46,7 @@ abstract class Character extends Card {
   }
 
   void turnLeft() {
-    direction = Direction.values[direction.index - 1];
+    direction = Direction.values[(direction.index - 1) % 4];
   }
 
   void turnRight() {
