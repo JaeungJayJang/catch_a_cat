@@ -18,10 +18,11 @@ abstract class Card extends PositionComponent with CollisionCallbacks {
   int positionY;
   late Map? map;
 
-  final _defaultColor = Colors.orange;
+  final Color _defaultColor = const Color.fromARGB(255, 0, 255, 30);
 
   bool addable = false; // can be used by another card.
-
+  late final defaultPaint;
+  late final RectangleHitbox hitbox;
   // Card constructor
   Card({
     this.type = Type.card,
@@ -40,12 +41,13 @@ abstract class Card extends PositionComponent with CollisionCallbacks {
 
   @override
   Future<void> onLoad() async {
-    final defaultPaint = Paint()
+    defaultPaint = Paint()
       ..color = _defaultColor
       ..style = PaintingStyle.stroke;
-    RectangleHitbox hitbox = RectangleHitbox()
+    hitbox = RectangleHitbox()
       ..paint = defaultPaint
-      ..renderShape = true;
+      ..renderShape = true
+      ..isSolid = true;
     add(hitbox);
   }
 
