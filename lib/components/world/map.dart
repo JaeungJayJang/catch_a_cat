@@ -26,6 +26,8 @@ class Map extends PositionComponent with HasCollisionDetection {
 
   List<Card> objects = [];
 
+  int point = 0;
+
   // World constructor
   Map({
     this.landCountX = 5,
@@ -127,6 +129,14 @@ class Map extends PositionComponent with HasCollisionDetection {
   void removeCard(Card card) {
     objects.remove(card);
     remove(card);
+  }
+
+  void increasePoint() {
+    point += 1;
+  }
+
+  int getPoint() {
+    return point;
   }
 
   late MainCharacter mainCharacter;
