@@ -2,6 +2,8 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import "package:flame/game.dart";
 import 'package:flame/input.dart';
+import 'package:flame/palette.dart';
+import 'package:flame/text.dart';
 import 'package:stack_RPG/components/world/map.dart';
 
 enum Gesture { up, down, left, right }
@@ -33,6 +35,7 @@ class StackRPGGame extends FlameGame
 
   static Gesture? gesture;
 
+  static late TextComponent vvv;
   static late Map map;
 
   // refresh
@@ -50,6 +53,30 @@ class StackRPGGame extends FlameGame
       landHeight: landHeight,
       landGap: landGap,
     );
+
+    // ------------------------------------------
+    // add point text
+    // ------------------------------------------
+    final regular = TextPaint(
+      style: TextStyle(
+        fontSize: 300.0,
+        color: BasicPalette.white.color,
+      ),
+    );
+
+    vvv = TextComponent(
+      text: "point: ${map.getPoint()}",
+      textRenderer: regular,
+      // anchor: Anchor.topCenter,
+      // position: Vector2(worldWidth / 2, 32.0),
+    );
+
+    vvv.debugMode = true;
+
+    // ------------------------------------------
+    // add components
+    // ------------------------------------------
+    world.add(vvv);
     world.add(map);
 
     // ------------------------------------------
@@ -71,6 +98,8 @@ class StackRPGGame extends FlameGame
   @override
   void update(double dt) {
     super.update(dt);
+
+    vvv.text = "point: ${map.getPoint()}";
 
     timePassed += dt;
   }
