@@ -58,6 +58,7 @@ class MainCharacter extends Character {
           positionX: newRandPos[0],
           positionY: newRandPos[1],
         );
+        map.increasePoint();
         map.removeCard(other);
         map.addCard(newGoal);
       }
