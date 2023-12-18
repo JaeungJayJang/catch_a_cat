@@ -35,7 +35,7 @@ class StackRPGGame extends FlameGame
 
   static Gesture? gesture;
 
-  static late TextComponent vvv;
+  static late TextComponent pointText;
   static late Map map;
 
   // refresh
@@ -55,28 +55,28 @@ class StackRPGGame extends FlameGame
     );
 
     // ------------------------------------------
-    // add point text
+    // create point text
     // ------------------------------------------
-    final regular = TextPaint(
-      style: TextStyle(
-        fontSize: 300.0,
-        color: BasicPalette.white.color,
-      ),
-    );
 
-    vvv = TextComponent(
+    pointText = TextComponent(
       text: "point: ${map.getPoint()}",
-      textRenderer: regular,
-      // anchor: Anchor.topCenter,
-      // position: Vector2(worldWidth / 2, 32.0),
+      textRenderer: TextPaint(
+        style: TextStyle(
+          fontSize: 24.0,
+          color: BasicPalette.white.color,
+        ),
+      ),
+      position: Vector2(
+        worldWidth / 400,
+        40,
+      ),
+      anchor: Anchor.bottomLeft,
     );
-
-    vvv.debugMode = true;
 
     // ------------------------------------------
     // add components
     // ------------------------------------------
-    world.add(vvv);
+    add(pointText);
     world.add(map);
 
     // ------------------------------------------
@@ -84,13 +84,16 @@ class StackRPGGame extends FlameGame
     // additional orientations go here.
     // ------------------------------------------
     // set view size relative to map
-    camera.viewfinder.visibleGameSize = Vector2(worldWidth, worldHeight);
+    camera.viewfinder.visibleGameSize =
+        Vector2(worldWidth + 100, worldHeight + 100);
 
     // set camera to center of map
     camera.viewfinder.position = Vector2(worldWidth / 2, worldHeight / 2);
 
     // set camera focus to the center
     camera.viewfinder.anchor = Anchor.center;
+
+    camera.debugMode = true;
   }
 
   double timePassed = 0.0;
@@ -99,7 +102,7 @@ class StackRPGGame extends FlameGame
   void update(double dt) {
     super.update(dt);
 
-    vvv.text = "point: ${map.getPoint()}";
+    pointText.text = "point: ${map.getPoint()}";
 
     timePassed += dt;
   }
