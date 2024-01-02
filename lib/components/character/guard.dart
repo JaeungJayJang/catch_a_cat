@@ -95,34 +95,34 @@ class Guard extends Character {
 
       // setSightPosition();
 
-      // List<int> frontPosition = getFrontPosition();
-      // if (super.map!.isSafe(frontPosition[0], frontPosition[1])) {
-      //   if (sight.seenObject is Guard) {
-      //     this.turnBack();
-      //   } else if (sight.seenObject is MainCharacter) {
-      //     print("Game over!");
-      //     throw new Exception("Game over!");
-      //   } else if (sight.seenObject is Sight) {
-      //     this.turnBack();
-      //     // if (direction.index % 2 == 0) {
-      //     //   // up or down
-      //     //   this.turnBack();
-      //     // }
-      //   } else {
-      //     this.moveForwardBy1();
-      //   }
+      List<int> frontPosition = getFrontPosition();
+      if (super.map!.isSafe(frontPosition[0], frontPosition[1])) {
+        if (sight.seenObject is Guard) {
+          this.turnBack();
+        } else if (sight.seenObject is MainCharacter) {
+          print("Game over!");
+          throw new Exception("Game over!");
+        } else if (sight.seenObject is Sight) {
+          this.turnBack();
+          // if (direction.index % 2 == 0) {
+          //   // up or down
+          //   this.turnBack();
+          // }
+        } else {
+          this.moveForwardBy1();
+        }
 
-      //   // if (sight.seeGuard) {
-      //   //   this.turnBack();
-      //   // }
-      //   // if (sight.seeObject) {
-      //   //   if (direction.index % 2 == 0) {
-      //   //     this.turnBack();
-      //   //   }
-      //   // }
-      // } else {
-      //   this.turnBack();
-      // }
+        // if (sight.seeGuard) {
+        //   this.turnBack();
+        // }
+        // if (sight.seeObject) {
+        //   if (direction.index % 2 == 0) {
+        //     this.turnBack();
+        //   }
+        // }
+      } else {
+        this.turnBack();
+      }
     }
   }
 
