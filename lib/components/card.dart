@@ -8,7 +8,7 @@ import 'package:stack_RPG/components/world/map.dart';
 
 enum Type { card, character, item, goal }
 
-abstract class Card extends PositionComponent with CollisionCallbacks {
+abstract class Card extends SpriteAnimationComponent with CollisionCallbacks {
   // Card characteristic
   Type type;
   double width;
@@ -31,6 +31,7 @@ abstract class Card extends PositionComponent with CollisionCallbacks {
     this.positionX = 0,
     this.positionY = 0,
     this.map,
+    super.animation,
   }) : super(
             size: Vector2(width, height),
             position: new Vector2(
