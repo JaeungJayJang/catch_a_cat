@@ -26,6 +26,8 @@ class Map extends PositionComponent with HasCollisionDetection {
 
   List<Card> objects = [];
 
+  int point = 0;
+
   // World constructor
   Map({
     this.landCountX = 5,
@@ -51,6 +53,25 @@ class Map extends PositionComponent with HasCollisionDetection {
           landWidth * landCountX + landGap * (landCountX + 1),
           landHeight * landCountY + landGap * (landCountY + 1),
         ));
+
+  final _borderPaint = Paint()
+    ..style = PaintingStyle.fill
+    ..strokeWidth = 10
+    ..color = Color.fromARGB(255, 255, 188, 112);
+
+  // render
+  @override
+  void render(Canvas canvas) {
+    RRect landRRect = RRect.fromRectAndRadius(
+      Rect.fromLTWH(0, 0, width, height),
+      const Radius.circular(50.0),
+    );
+
+    canvas.drawRRect(
+      landRRect,
+      _borderPaint,
+    );
+  }
 
   bool isSafe(int x, int y) {
     // Check if the position is in the map
@@ -129,6 +150,17 @@ class Map extends PositionComponent with HasCollisionDetection {
     remove(card);
   }
 
+  void increasePoint() {
+    point += 1;
+    if (point % 5 == 0) {
+      increaseGuardSpeed();
+    }
+  }
+
+  int getPoint() {
+    return point;
+  }
+
   late MainCharacter mainCharacter;
 
   @override
@@ -152,6 +184,12 @@ class Map extends PositionComponent with HasCollisionDetection {
   int numGuards = 3;
   static late List<Guard> guards;
   static late Goal goal;
+
+  void increaseGuardSpeed() {
+    for (int i = 0; i < numGuards; i++) {
+      guards[i].increaseSpeed();
+    }
+  }
 
   // refresh
   double interval = 1.0;

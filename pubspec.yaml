@@ -10,4 +10,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flame: ^1.10.0
+  flame: 1.10.0
+
+flutter:
+  assets:
+    - assets/images/characters/cat/
+    - assets/images/characters/dog/
+    - assets/images/characters/main/

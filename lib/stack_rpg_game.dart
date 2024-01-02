@@ -2,6 +2,8 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import "package:flame/game.dart";
 import 'package:flame/input.dart';
+import 'package:flame/palette.dart';
+import 'package:flame/text.dart';
 import 'package:stack_RPG/components/world/map.dart';
 
 enum Gesture { up, down, left, right }
@@ -33,6 +35,7 @@ class StackRPGGame extends FlameGame
 
   static Gesture? gesture;
 
+  static late TextComponent pointText;
   static late Map map;
 
   // refresh
@@ -50,6 +53,30 @@ class StackRPGGame extends FlameGame
       landHeight: landHeight,
       landGap: landGap,
     );
+
+    // ------------------------------------------
+    // create point text
+    // ------------------------------------------
+
+    pointText = TextComponent(
+      text: "point: ${map.getPoint()}",
+      textRenderer: TextPaint(
+        style: TextStyle(
+          fontSize: 24.0,
+          color: BasicPalette.white.color,
+        ),
+      ),
+      position: Vector2(
+        worldWidth / 400,
+        40,
+      ),
+      anchor: Anchor.bottomLeft,
+    );
+
+    // ------------------------------------------
+    // add components
+    // ------------------------------------------
+    add(pointText);
     world.add(map);
 
     // ------------------------------------------
@@ -57,13 +84,16 @@ class StackRPGGame extends FlameGame
     // additional orientations go here.
     // ------------------------------------------
     // set view size relative to map
-    camera.viewfinder.visibleGameSize = Vector2(worldWidth, worldHeight);
+    camera.viewfinder.visibleGameSize =
+        Vector2(worldWidth + 100, worldHeight + 100);
 
     // set camera to center of map
     camera.viewfinder.position = Vector2(worldWidth / 2, worldHeight / 2);
 
     // set camera focus to the center
     camera.viewfinder.anchor = Anchor.center;
+
+    camera.debugMode = true;
   }
 
   double timePassed = 0.0;
@@ -71,6 +101,8 @@ class StackRPGGame extends FlameGame
   @override
   void update(double dt) {
     super.update(dt);
+
+    pointText.text = "point: ${map.getPoint()}";
 
     timePassed += dt;
   }

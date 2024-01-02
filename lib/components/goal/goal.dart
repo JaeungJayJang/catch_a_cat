@@ -16,7 +16,7 @@ class Goal extends Card {
 
   final _borderPaint = Paint()
     ..style = PaintingStyle.stroke
-    ..strokeWidth = 10
+    ..strokeWidth = 100
     ..color = Color.fromARGB(255, 255, 19, 35);
 
   // render
