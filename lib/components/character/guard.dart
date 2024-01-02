@@ -2,10 +2,10 @@ import 'dart:ui';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:stack_RPG/components/card.dart';
+import 'package:flame/sprite.dart';
 import 'package:stack_RPG/components/character/character.dart';
 import 'package:stack_RPG/components/character/mainCharacter.dart';
-import 'package:stack_RPG/stack_rpg_game.dart';
+import 'package:flame/cache.dart';
 
 class Guard extends Character {
   late Sight sight;
@@ -18,6 +18,7 @@ class Guard extends Character {
     super.positionX,
     super.positionY,
     super.direction,
+    super.animation,
   });
 
   final _borderPaint = Paint()
@@ -28,6 +29,12 @@ class Guard extends Character {
   @override
   Future<void> onLoad() async {
     super.onLoad();
+
+    final spriteSheet = SpriteSheet(
+      image: await Images().load("characters/dog/Idle.png"),
+      srcSize: Vector2.all(48.0),
+    );
+    this.animation = spriteSheet.createAnimation(row: 0, stepTime: 0.25);
 
     sight = Sight(
       width: 1000,
@@ -40,10 +47,17 @@ class Guard extends Character {
   // render
   @override
   void render(Canvas canvas) {
+    super.render(canvas);
+
     RRect landRRect = RRect.fromRectAndRadius(
       Rect.fromLTWH(0, 0, width, height),
       const Radius.circular(50.0),
     );
+
+    this
+        .animationTicker
+        ?.getSprite()
+        .render(canvas, size: Vector2(width, height));
 
     canvas.drawRRect(landRRect, _borderPaint);
   }
@@ -81,34 +95,34 @@ class Guard extends Character {
 
       // setSightPosition();
 
-      List<int> frontPosition = getFrontPosition();
-      if (super.map!.isSafe(frontPosition[0], frontPosition[1])) {
-        if (sight.seenObject is Guard) {
-          this.turnBack();
-        } else if (sight.seenObject is MainCharacter) {
-          print("Game over!");
-          throw new Exception("Game over!");
-        } else if (sight.seenObject is Sight) {
-          this.turnBack();
-          // if (direction.index % 2 == 0) {
-          //   // up or down
-          //   this.turnBack();
-          // }
-        } else {
-          this.moveForwardBy1();
-        }
+      // List<int> frontPosition = getFrontPosition();
+      // if (super.map!.isSafe(frontPosition[0], frontPosition[1])) {
+      //   if (sight.seenObject is Guard) {
+      //     this.turnBack();
+      //   } else if (sight.seenObject is MainCharacter) {
+      //     print("Game over!");
+      //     throw new Exception("Game over!");
+      //   } else if (sight.seenObject is Sight) {
+      //     this.turnBack();
+      //     // if (direction.index % 2 == 0) {
+      //     //   // up or down
+      //     //   this.turnBack();
+      //     // }
+      //   } else {
+      //     this.moveForwardBy1();
+      //   }
 
-        // if (sight.seeGuard) {
-        //   this.turnBack();
-        // }
-        // if (sight.seeObject) {
-        //   if (direction.index % 2 == 0) {
-        //     this.turnBack();
-        //   }
-        // }
-      } else {
-        this.turnBack();
-      }
+      //   // if (sight.seeGuard) {
+      //   //   this.turnBack();
+      //   // }
+      //   // if (sight.seeObject) {
+      //   //   if (direction.index % 2 == 0) {
+      //   //     this.turnBack();
+      //   //   }
+      //   // }
+      // } else {
+      //   this.turnBack();
+      // }
     }
   }
 

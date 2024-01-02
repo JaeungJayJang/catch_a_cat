@@ -21,6 +21,7 @@ abstract class Character extends Card {
     this.interval = 1.0,
     super.positionX,
     super.positionY,
+    super.animation,
     Direction? direction,
   })  : direction = direction ??
             Direction.values[Random().nextInt(Direction.values.length)],
