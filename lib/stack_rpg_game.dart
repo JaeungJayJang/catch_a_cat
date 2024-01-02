@@ -70,7 +70,7 @@ class StackRPGGame extends FlameGame
         worldWidth / 400,
         40,
       ),
-      anchor: Anchor.bottomLeft,
+      anchor: Anchor.topLeft,
     );
 
     // ------------------------------------------
