@@ -54,6 +54,25 @@ class Map extends PositionComponent with HasCollisionDetection {
           landHeight * landCountY + landGap * (landCountY + 1),
         ));
 
+  final _borderPaint = Paint()
+    ..style = PaintingStyle.fill
+    ..strokeWidth = 10
+    ..color = Color.fromARGB(255, 255, 188, 112);
+
+  // render
+  @override
+  void render(Canvas canvas) {
+    RRect landRRect = RRect.fromRectAndRadius(
+      Rect.fromLTWH(0, 0, width, height),
+      const Radius.circular(50.0),
+    );
+
+    canvas.drawRRect(
+      landRRect,
+      _borderPaint,
+    );
+  }
+
   bool isSafe(int x, int y) {
     // Check if the position is in the map
     if (x >= 0 && x <= landCountX - 1) {
@@ -133,6 +152,9 @@ class Map extends PositionComponent with HasCollisionDetection {
 
   void increasePoint() {
     point += 1;
+    if (point % 5 == 0) {
+      increaseGuardSpeed();
+    }
   }
 
   int getPoint() {
@@ -162,6 +184,12 @@ class Map extends PositionComponent with HasCollisionDetection {
   int numGuards = 3;
   static late List<Guard> guards;
   static late Goal goal;
+
+  void increaseGuardSpeed() {
+    for (int i = 0; i < numGuards; i++) {
+      guards[i].increaseSpeed();
+    }
+  }
 
   // refresh
   double interval = 1.0;
