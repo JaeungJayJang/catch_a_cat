@@ -79,6 +79,10 @@ class Guard extends Character {
     }
   }
 
+  void increaseSpeed() {
+    interval *= 5 / 6;
+  }
+
   double timePassed = 0.0;
   @override
   void update(double dt) {
