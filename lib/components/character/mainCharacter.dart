@@ -51,10 +51,6 @@ class MainCharacter extends Character {
   @override
   void render(Canvas canvas) {
     super.render(canvas);
-    this
-        .animationTicker
-        ?.getSprite()
-        .render(canvas, size: Vector2(width, height));
   }
 
   @override

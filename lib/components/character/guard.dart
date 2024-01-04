@@ -54,11 +54,6 @@ class Guard extends Character {
       const Radius.circular(50.0),
     );
 
-    this
-        .animationTicker
-        ?.getSprite()
-        .render(canvas, size: Vector2(width, height));
-
     canvas.drawRRect(landRRect, _borderPaint);
   }
 
