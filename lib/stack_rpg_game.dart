@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import "package:flame/game.dart";
@@ -105,6 +107,16 @@ class StackRPGGame extends FlameGame
     pointText.text = "point: ${map.getPoint()}";
 
     timePassed += dt;
+  }
+
+  @override
+  Color backgroundColor() {
+    return const Color.fromARGB(255, 173, 223, 247);
+  }
+
+  @override
+  void render(Canvas canvas) {
+    super.render(canvas);
   }
 
   @override
