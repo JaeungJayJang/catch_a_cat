@@ -62,6 +62,7 @@ class Map extends PositionComponent with HasCollisionDetection {
   // render
   @override
   void render(Canvas canvas) {
+    super.render(canvas);
     RRect landRRect = RRect.fromRectAndRadius(
       Rect.fromLTWH(0, 0, width, height),
       const Radius.circular(50.0),
