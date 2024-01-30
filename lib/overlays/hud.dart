@@ -29,7 +29,7 @@ class Hud extends PositionComponent with HasGameReference<StackRPGGame> {
         ),
       ),
       anchor: Anchor.center,
-      position: Vector2(60, 20),
+      position: Vector2(60, 60),
     );
     _scoreTextComponent = TextComponent(
       text: 'point: ${game.point}',
@@ -40,7 +40,7 @@ class Hud extends PositionComponent with HasGameReference<StackRPGGame> {
         ),
       ),
       anchor: Anchor.center,
-      position: Vector2(game.size.x - 60, 20),
+      position: Vector2(game.size.x - 60, 60),
     );
 
     add(_levelTextComponent);
