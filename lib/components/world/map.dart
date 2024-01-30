@@ -9,8 +9,10 @@ import 'package:stack_RPG/components/character/guard.dart';
 import 'package:stack_RPG/components/character/mainCharacter.dart';
 import 'package:stack_RPG/components/goal/goal.dart';
 import 'package:stack_RPG/components/world/land.dart';
+import 'package:stack_RPG/stack_rpg_game.dart';
 
-class Map extends PositionComponent with HasCollisionDetection {
+class Map extends PositionComponent
+    with HasCollisionDetection, HasGameReference<StackRPGGame> {
   // World characteristic
   double width;
   double height;
@@ -25,8 +27,6 @@ class Map extends PositionComponent with HasCollisionDetection {
   List<List<Land?>> lands;
 
   List<Card> objects = [];
-
-  int point = 0;
 
   // World constructor
   Map({
@@ -152,14 +152,15 @@ class Map extends PositionComponent with HasCollisionDetection {
   }
 
   void increasePoint() {
-    point += 1;
-    if (point % 5 == 0) {
+    game.point += 1;
+    if (game.point % 5 == 0) {
+      game.gameLevel += 1;
       increaseGuardSpeed();
     }
   }
 
   int getPoint() {
-    return point;
+    return game.point;
   }
 
   late MainCharacter mainCharacter;

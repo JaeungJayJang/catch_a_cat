@@ -6,8 +6,9 @@ import 'package:flame/sprite.dart';
 import 'package:stack_RPG/components/character/character.dart';
 import 'package:stack_RPG/components/character/mainCharacter.dart';
 import 'package:flame/cache.dart';
+import 'package:stack_RPG/stack_rpg_game.dart';
 
-class Guard extends Character {
+class Guard extends Character with HasGameReference<StackRPGGame> {
   late Sight sight;
 
   Guard({
@@ -99,8 +100,7 @@ class Guard extends Character {
         if (sight.seenObject is Guard) {
           this.turnBack();
         } else if (sight.seenObject is MainCharacter) {
-          print("Game over!");
-          throw new Exception("Game over!");
+          game.found = true;
         } else if (sight.seenObject is Sight) {
           this.turnBack();
           // if (direction.index % 2 == 0) {

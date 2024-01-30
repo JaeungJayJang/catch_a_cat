@@ -4,9 +4,8 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import "package:flame/game.dart";
 import 'package:flame/input.dart';
-import 'package:flame/palette.dart';
-import 'package:flame/text.dart';
 import 'package:stack_RPG/components/world/map.dart';
+import 'package:stack_RPG/overlays/hud.dart';
 
 enum Gesture { up, down, left, right }
 
@@ -16,7 +15,9 @@ enum Gesture { up, down, left, right }
 
 class StackRPGGame extends FlameGame
     with MultiTouchDragDetector, HasCollisionDetection {
-  static int gameLevel = 1;
+  int gameLevel = 1;
+  int point = 0;
+  bool found = false;
 
   // variables that define the world and lands on the world.
   // land is where cards are placed
@@ -37,7 +38,6 @@ class StackRPGGame extends FlameGame
 
   static Gesture? gesture;
 
-  static late TextComponent pointText;
   static late Map map;
 
   // refresh
@@ -57,28 +57,9 @@ class StackRPGGame extends FlameGame
     );
 
     // ------------------------------------------
-    // create point text
-    // ------------------------------------------
-
-    pointText = TextComponent(
-      text: "point: ${map.getPoint()}",
-      textRenderer: TextPaint(
-        style: TextStyle(
-          fontSize: 24.0,
-          color: BasicPalette.white.color,
-        ),
-      ),
-      position: Vector2(
-        worldWidth / 400,
-        40,
-      ),
-      anchor: Anchor.topLeft,
-    );
-
-    // ------------------------------------------
     // add components
     // ------------------------------------------
-    add(pointText);
+    add(Hud());
     world.add(map);
 
     // ------------------------------------------
@@ -104,8 +85,9 @@ class StackRPGGame extends FlameGame
   void update(double dt) {
     super.update(dt);
 
-    pointText.text = "point: ${map.getPoint()}";
-
+    if (found) {
+      overlays.add('GameOver');
+    }
     timePassed += dt;
   }
 
@@ -166,5 +148,20 @@ class StackRPGGame extends FlameGame
         }
       }
     }
+  }
+
+  void reset() {
+    gameLevel = 1;
+    point = 0;
+    found = false;
+    map.removeFromParent();
+    map = Map(
+      landCountX: landCountX,
+      landCountY: landCountY,
+      landWidth: landWidth,
+      landHeight: landHeight,
+      landGap: landGap,
+    );
+    world.add(map);
   }
 }

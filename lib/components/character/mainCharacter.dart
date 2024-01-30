@@ -7,8 +7,9 @@ import 'package:stack_RPG/components/character/character.dart';
 import 'package:stack_RPG/components/goal/goal.dart';
 import 'package:stack_RPG/components/world/map.dart';
 import 'package:flame/cache.dart';
+import 'package:stack_RPG/stack_rpg_game.dart';
 
-class MainCharacter extends Character {
+class MainCharacter extends Character with HasGameReference<StackRPGGame> {
   late SpriteAnimationTicker customAnimation;
 
   MainCharacter({
