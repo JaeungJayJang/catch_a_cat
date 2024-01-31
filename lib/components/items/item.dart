@@ -32,5 +32,7 @@ abstract class Item extends Card {
       landRRect,
       _borderPaint,
     );
+
+    super.render(canvas);
   }
 }
