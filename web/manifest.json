@@ -1,6 +1,6 @@
 {
-    "name": "game_1",
-    "short_name": "game_1",
+    "name": "catch_a_cat",
+    "short_name": "catch_a_cat",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
