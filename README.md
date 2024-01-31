@@ -1,5 +1,7 @@
 # Catch a Cat
 
+[Try in your browser!](https://qmffkem.github.io/catch_a_cat/)
+
 catch precious golds without being caught by dog.
 
 Made it using Flame and free graphics from [craftpix](https://craftpix.net/freebies/)
