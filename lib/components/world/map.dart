@@ -1,10 +1,8 @@
 import 'dart:ui';
 import 'dart:math';
-import 'package:collection/collection.dart';
 
 import 'package:flame/components.dart';
 import 'package:stack_RPG/components/card.dart';
-import 'package:stack_RPG/components/character/character.dart';
 import 'package:stack_RPG/components/character/guard.dart';
 import 'package:stack_RPG/components/character/mainCharacter.dart';
 import 'package:stack_RPG/components/goal/goal.dart';
