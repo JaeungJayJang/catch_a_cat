@@ -1,9 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:flame/components.dart';
 import 'package:stack_RPG/components/card.dart';
-import 'package:stack_RPG/components/goal/goal.dart';
 
 enum Direction { up, right, down, left }
 
