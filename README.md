@@ -10,4 +10,5 @@ https://github.com/qmffkem/catch-a-cat/assets/28370250/6f1c7ad4-706e-407d-b74b-2
 
 
 ### Things to implement
-[ ] Control by keyboards ( Originally meant to be for mobile, so the logic is not implemented yet 😅
+ - [ ] Control by keyboards ( Originally meant to be for mobile, so the logic is not implemented yet 😅
+ - [ ] Better component lifecycle
