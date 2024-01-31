@@ -15,11 +15,6 @@ class Goal extends Card {
           type: Type.goal,
         );
 
-  final _borderPaint = Paint()
-    ..style = PaintingStyle.stroke
-    ..strokeWidth = 100
-    ..color = Color.fromARGB(255, 255, 19, 35);
-
   @override
   Future<void> onLoad() async {
     super.onLoad();
