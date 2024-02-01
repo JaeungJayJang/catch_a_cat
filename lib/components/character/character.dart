@@ -39,10 +39,10 @@ abstract class Character extends Card {
       const Radius.circular(50.0),
     );
 
-    canvas.drawRRect(
-      landRRect,
-      _borderPaint,
-    );
+    // canvas.drawRRect(
+    //   landRRect,
+    //   _borderPaint,
+    // );
   }
 
   void turnLeft() {
