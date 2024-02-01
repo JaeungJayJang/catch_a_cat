@@ -221,8 +221,8 @@ class Map extends PositionComponent
       try {
         List goardPosition = getRandomPosition();
         guards[i] = Guard(
-          positionY: goardPosition[1],
           positionX: goardPosition[0],
+          positionY: goardPosition[1],
         );
         // positionX: 2,
         // positionY: 2);
