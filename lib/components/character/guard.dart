@@ -106,6 +106,7 @@ class Guard extends Character with HasGameReference<StackRPGGame> {
           this.turnBack();
         } else if (sight.seenObject is MainCharacter) {
           game.found = true;
+          map!.removeFromParent();
         } else if (sight.seenObject is Sight) {
           this.turnBack();
           // if (direction.index % 2 == 0) {

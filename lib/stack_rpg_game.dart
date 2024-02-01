@@ -60,7 +60,6 @@ class StackRPGGame extends FlameGame
     // add components
     // ------------------------------------------
     add(Hud());
-    world.add(map);
 
     // ------------------------------------------
     // set the camera to fix to lands.
@@ -150,11 +149,14 @@ class StackRPGGame extends FlameGame
     }
   }
 
+  void initialize() {
+    world.add(map);
+  }
+
   void reset() {
     gameLevel = 1;
     point = 0;
     found = false;
-    map.removeFromParent();
     map = Map(
       landCountX: landCountX,
       landCountY: landCountY,
