@@ -39,10 +39,10 @@ abstract class Character extends Card {
       const Radius.circular(50.0),
     );
 
-    // canvas.drawRRect(
-    //   landRRect,
-    //   _borderPaint,
-    // );
+    canvas.drawRRect(
+      landRRect,
+      _borderPaint,
+    );
   }
 
   void turnLeft() {
@@ -58,7 +58,7 @@ abstract class Character extends Card {
 
     // adjust facing direction
     if (direction == Direction.left || direction == Direction.right) {
-      flipHorizontally();
+      flipHorizontallyAroundCenter();
     }
   }
 
