@@ -55,6 +55,11 @@ abstract class Character extends Card {
 
   void turnBack() {
     direction = Direction.values[(direction.index + 2) % 4];
+
+    // adjust facing direction
+    if (direction == Direction.left || direction == Direction.right) {
+      flipHorizontally();
+    }
   }
 
   void moveForwardBy1() {
