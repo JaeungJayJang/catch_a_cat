@@ -55,7 +55,7 @@ class Guard extends Character with HasGameReference<StackRPGGame> {
       const Radius.circular(50.0),
     );
 
-    canvas.drawRRect(landRRect, _borderPaint);
+    // canvas.drawRRect(landRRect, _borderPaint);
   }
 
   void setSightPosition() {

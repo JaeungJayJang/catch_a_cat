@@ -42,12 +42,10 @@ abstract class Card extends SpriteAnimationComponent with CollisionCallbacks {
 
   @override
   Future<void> onLoad() async {
-    defaultPaint = Paint()
-      ..color = _defaultColor
-      ..style = PaintingStyle.stroke;
+    defaultPaint = Paint()..style = PaintingStyle.stroke;
     hitbox = RectangleHitbox()
       ..paint = defaultPaint
-      ..renderShape = true
+      // ..renderShape = true
       ..isSolid = true;
     add(hitbox);
   }
