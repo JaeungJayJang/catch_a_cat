@@ -44,7 +44,7 @@ class Guard extends Character with HasGameReference<StackRPGGame> {
 
     // fix facing direction
     if (direction == Direction.left) {
-      flipHorizontally();
+      flipHorizontallyAroundCenter();
     }
 
     add(sight);
