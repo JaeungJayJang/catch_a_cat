@@ -1,6 +1,6 @@
 # Catch a Cat
 
-[Try in your browser!](https://qmffkem.github.io/catch_a_cat/)
+[Try in your browser!](https://jaeungjayjang.github.io/catch_a_cat/)
 
 catch precious golds without being caught by dog.
 
